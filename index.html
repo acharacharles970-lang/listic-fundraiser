@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listic Fundraiser – Help Dominic Oyagi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f2240;
+    --gold: #c9973a;
+    --green: #00a651;
+    --cream: #faf7f2;
+    --muted: #6b7a8d;
+    --white: #ffffff;
+    --border: #e4ddd3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .logo span { color: var(--gold); }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 32px;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--navy); }
+  .nav-cta {
+    background: var(--green) !important;
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 490px;
+    min-height: 88vh;
+    align-items: stretch;
+  }
+  .hero-left {
+    padding: 80px 64px 80px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--cream);
+    animation: fadeUp 0.8s ease both;
+  }
+  .eyebrow {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+  .hero-stats { display: flex; gap: 36px; flex-wrap: wrap; }
+  .stat-item .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .stat-item .label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-right {
+    background: var(--navy);
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .form-sub {
+    font-size: 0.86rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 22px;
+  }
+
+  .progress-wrap {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    height: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 24px;
+  }
+  .progress-info strong { color: var(--gold); }
+
+  .amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    margin-bottom: 14px;
+  }
+  .amount-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 12px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .amount-btn:hover, .amount-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+    color: rgba(255,255,255,0.22);
+    font-size: 0.76rem;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .custom-amount {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .custom-amount .prefix {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.45);
+    font-size: 0.85rem;
+    font-weight: 500;
+    pointer-events: none;
+  }
+  .custom-amount input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    padding: 12px 14px 12px 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .custom-amount input::placeholder { color: rgba(255,255,255,0.28); }
+  .custom-amount input:focus { border-color: var(--green); }
+
+  .mpesa-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(0,166,81,0.15);
+    border: 1px solid rgba(0,166,81,0.3);
+    border-radius: 6px;
+    padding: 7px 12px;
+    margin-bottom: 14px;
+    font-size: 0.8rem;
+    color: #4ade80;
+    font-weight: 500;
+  }
+  .mpesa-pill {
+    background: var(--green);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .form-field { margin-bottom: 14px; }
+  .form-field label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 5px;
+    letter-spacing: 0.04em;
+  }
+
+  .phone-row { display: flex; }
+  .phone-code {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    padding: 13px 12px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.88rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .phone-row input {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 0 8px 8px 0;
+    padding: 13px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .phone-row input::placeholder { color: rgba(255,255,255,0.28); }
+  .phone-row input:focus { border-color: var(--green); }
+
+  .donate-btn {
+    width: 100%;
+    background: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+  }
+  .donate-btn:hover { background: #009144; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,166,81,0.3); }
+  .donate-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .secure-note {
+    text-align: center;
+    font-size: 0.73rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 9px;
+  }
+
+  .stk-status {
+    display: none;
+    background: rgba(0,166,81,0.12);
+    border: 1px solid rgba(0,166,81,0.3);
+    border-radius: 10px;
+    padding: 18px;
+    margin-top: 14px;
+    text-align: center;
+  }
+  .stk-status.show { display: block; }
+  .stk-icon { font-size: 2rem; margin-bottom: 8px; }
+  .stk-status p { font-size: 0.86rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .stk-phone { color: #4ade80; font-weight: 600; }
+
+  .stk-error {
+    display: none;
+    background: rgba(220,50,50,0.12);
+    border: 1px solid rgba(220,50,50,0.28);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 0.84rem;
+    color: #fca5a5;
+    text-align: center;
+  }
+  .stk-error.show { display: block; }
+
+  .success-msg {
+    display: none;
+    background: rgba(0,166,81,0.15);
+    border: 1px solid rgba(0,166,81,0.35);
+    border-radius: 10px;
+    color: #86efac;
+    padding: 18px;
+    font-size: 0.9rem;
+    margin-top: 14px;
+    text-align: center;
+    line-height: 1.65;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 96px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    background: var(--white);
+  }
+  .about-label {
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .about h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 22px;
+    color: var(--navy);
+  }
+  .about p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .about-img {
+    border-radius: 16px;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #0f2240, #1a3f60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+  }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .impact-card {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .impact-card .icon { font-size: 1.4rem; margin-bottom: 8px; }
+  .impact-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .impact-card p { font-size: 0.82rem; color: var(--muted); margin: 0; }
+
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 28px;
+    font-size: 0.82rem;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .pulsing { animation: pulse 1.4s ease-in-out infinite; display: inline-block; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 56px 24px; }
+    .hero-right { padding: 40px 24px; }
+    nav { padding: 16px 20px; }
+    .about { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .about-img { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Listic<span>Fundraiser</span></div>
+  <div>
+    <a href="#about">Dominic's Story</a>
+    <a href="#donate" class="nav-cta">Donate via M-Pesa</a>
+  </div>
+</nav>
+
+<section class="hero" id="donate">
+  <div class="hero-left">
+    <div class="eyebrow">Community Fundraiser · Nairobi, Kenya</div>
+    <h1>Help Dominic Oyagi Visit Mathare Hospital</h1>
+    <p>Dominic Oyagi needs urgent mental health care at Mathare National Teaching &amp; Referral Hospital. Your contribution — however small — helps cover his consultation, treatment, and medication costs.</p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="num" id="raisedStat">Ksh 0</div>
+        <div class="label">Raised so far</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">Ksh 50,000</div>
+        <div class="label">Target goal</div>
+      </div>
+      <div class="stat-item">
+        <div class="num" id="donorStat">0</div>
+        <div class="label">Donors</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="form-title">Donate via M-Pesa</div>
+    <div class="form-sub">You'll get an STK push — just enter your PIN</div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-info">
+      <span><strong id="raisedLabel">Ksh 0</strong> raised</span>
+      <span>Goal: <strong>Ksh 50,000</strong></span>
+    </div>
+
+    <!-- AMOUNT PRESETS -->
+    <div class="amount-grid">
+      <button class="amount-btn" onclick="selectAmount(100, this)">Ksh 100</button>
+      <button class="amount-btn active" onclick="selectAmount(500, this)">Ksh 500</button>
+      <button class="amount-btn" onclick="selectAmount(1000, this)">Ksh 1,000</button>
+      <button class="amount-btn" onclick="selectAmount(2000, this)">Ksh 2,000</button>
+      <button class="amount-btn" onclick="selectAmount(5000, this)">Ksh 5,000</button>
+      <button class="amount-btn" onclick="selectAmount(10000, this)">Ksh 10,000</button>
+    </div>
+
+    <div class="divider">or enter custom amount</div>
+
+    <div class="custom-amount">
+      <span class="prefix">Ksh</span>
+      <input type="number" id="customAmt" placeholder="Any amount (min Ksh 1)" oninput="clearActive()" />
+    </div>
+
+    <!-- MPESA PHONE -->
+    <div class="mpesa-badge">
+      <span class="mpesa-pill">M-PESA</span>
+      Enter your Safaricom number to receive push
+    </div>
+
+    <div class="form-field">
+      <label>Your M-Pesa Number</label>
+      <div class="phone-row">
+        <div class="phone-code">🇰🇪 +254</div>
+        <input type="tel" id="phoneNumber" placeholder="7XX XXX XXX" maxlength="9" />
+      </div>
+    </div>
+
+    <button class="donate-btn" id="donateBtn" onclick="handleMpesa()">
+      <span>📱</span> Pay with M-Pesa
+    </button>
+    <div class="secure-note">🔒 Powered by Safaricom Daraja · Funds go to 0711 765 392</div>
+
+    <!-- STK SENT -->
+    <div class="stk-status" id="stkStatus">
+      <div class="stk-icon pulsing">📲</div>
+      <p>M-Pesa prompt sent to <span class="stk-phone" id="stkPhone"></span>.<br>
+      Enter your <strong>M-Pesa PIN</strong> on your phone to complete the donation.</p>
+    </div>
+
+    <!-- ERROR -->
+    <div class="stk-error" id="stkError"></div>
+
+    <!-- SUCCESS -->
+    <div class="success-msg" id="successMsg">
+      ✅ <strong>Asante sana!</strong> Payment received.<br>
+      Thank you for standing with Dominic Oyagi. 🙏🏾
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="about-label">His Story</div>
+    <h2>Standing with Dominic Oyagi</h2>
+    <p>Dominic Oyagi is a member of our community who has been experiencing mental health challenges that have grown increasingly difficult for him and his family to manage alone. He needs professional evaluation and treatment at <strong>Mathare National Teaching and Referral Hospital</strong> — Kenya's foremost mental health institution.</p>
+    <p>Every shilling raised goes directly toward Dominic's hospital consultation, psychiatric assessment, medication, and follow-up care. Let us come together and show him that his community has his back.</p>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="icon">🏥</div>
+        <h4>Mathare</h4>
+        <p>National Teaching & Referral Hospital, Nairobi</p>
+      </div>
+      <div class="impact-card">
+        <div class="icon">💊</div>
+        <h4>Treatment</h4>
+        <p>Psychiatric assessment & medication</p>
+      </div>
+      <div class="impact-card">
+        <div class="icon">🤝</div>
+        <h4>Community</h4>
+        <p>Rallying around one of our own</p>
+      </div>
+      <div class="impact-card">
+        <div class="icon">💚</div>
+        <h4>100%</h4>
+        <p>All funds go to Dominic's care</p>
+      </div>
+    </div>
+  </div>
+  <div class="about-img">
+    <div>
+      <p style="font-size:3.5rem;margin-bottom:14px;">🏥</p>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.55);line-height:1.7;">Mathare National Teaching<br>&amp; Referral Hospital<br><span style="font-size:0.82rem;color:rgba(255,255,255,0.3);">Thika Road, Nairobi</span></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Listic Fundraiser · All donations go directly to Dominic Oyagi's medical care · <a href="#">Contact Organiser</a></p>
+</footer>
+
+<script>
+  // ── Recipient (hardcoded) ──────────────────────────────────────────
+  const RECIPIENT_PHONE = '254711765392'; // 0711765392
+
+  // ── State ──────────────────────────────────────────────────────────
+  let selectedAmount = 500;
+  let totalRaised    = 0;
+  let donorCount     = 0;
+  const GOAL         = 50000;
+
+  // ── Amount buttons ─────────────────────────────────────────────────
+  function selectAmount(val, btn) {
+    selectedAmount = val;
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('customAmt').value = '';
+    hideMessages();
+  }
+
+  function clearActive() {
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+    selectedAmount = null;
+    hideMessages();
+  }
+
+  function hideMessages() {
+    document.getElementById('stkStatus').classList.remove('show');
+    document.getElementById('stkError').classList.remove('show');
+    document.getElementById('successMsg').style.display = 'none';
+  }
+
+  // ── Phone helpers ──────────────────────────────────────────────────
+  function normalisePhone(raw) {
+    // strip spaces, leading 0 or +254/254
+    return '254' + raw.replace(/\s+/g,'').replace(/^0/,'').replace(/^\+?254/,'');
+  }
+
+  function isValidSafaricom(raw) {
+    const d = raw.replace(/\s+/g,'');
+    return /^[17][0-9]{8}$/.test(d);  // 07xx or 01xx
+  }
+
+  // ── Progress UI ────────────────────────────────────────────────────
+  function updateProgress(added) {
+    totalRaised += added;
+    donorCount  += 1;
+    const pct = Math.min((totalRaised / GOAL) * 100, 100).toFixed(1);
+    document.getElementById('progressBar').style.width = pct + '%';
+    const fmt = 'Ksh ' + totalRaised.toLocaleString();
+    document.getElementById('raisedLabel').textContent = fmt;
+    document.getElementById('raisedStat').textContent  = fmt;
+    document.getElementById('donorStat').textContent   = donorCount;
+  }
+
+  // ── M-Pesa STK Push ────────────────────────────────────────────────
+  async function handleMpesa() {
+    hideMessages();
+
+    const custom = document.getElementById('customAmt').value;
+    const amount = custom ? parseFloat(custom) : selectedAmount;
+    const phone  = document.getElementById('phoneNumber').value.trim();
+
+    if (!amount || amount < 1)           { showError('Please select or enter a valid amount (min Ksh 1).'); return; }
+    if (!phone || !isValidSafaricom(phone)) { showError('Please enter a valid Safaricom number, e.g. 0712 345 678.'); return; }
+
+    const msisdn      = normalisePhone(phone);
+    const displayPhone = '+254 ' + phone.replace(/\s/g,'').replace(/^0/,'');
+
+    const btn = document.getElementById('donateBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="pulsing">⏳</span> Sending M-Pesa request…';
+
+    try {
+      // ── Call our backend STK push endpoint ────────────────────────
+      const res = await fetch('/api/stk-push', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone:  msisdn,                 // contributor's number (payer)
+          amount: Math.ceil(amount),
+          recipient: RECIPIENT_PHONE,     // 0711765392 — hardcoded destination
+          description: 'Dominic Oyagi – Mathare Hospital Fund'
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.ResponseCode !== '0') {
+        throw new Error(data.errorMessage || data.ResponseDescription || 'STK push failed. Please try again.');
+      }
+
+      // STK sent — show waiting prompt
+      document.getElementById('stkPhone').textContent = displayPhone;
+      document.getElementById('stkStatus').classList.add('show');
+      btn.innerHTML = '<span class="pulsing">📲</span> Waiting for PIN…';
+
+      // Poll for payment confirmation
+      const checkoutId = data.CheckoutRequestID;
+      await pollPaymentStatus(checkoutId, amount);
+
+    } catch (err) {
+      showError(err.message || 'Could not reach M-Pesa. Check your connection and try again.');
+      btn.disabled = false;
+      btn.innerHTML = '<span>📱</span> Pay with M-Pesa';
+    }
+  }
+
+  // ── Poll backend for callback confirmation ─────────────────────────
+  async function pollPaymentStatus(checkoutId, amount) {
+    const btn       = document.getElementById('donateBtn');
+    const maxTries  = 20;   // ~60 seconds
+    const interval  = 3000;
+
+    for (let i = 0; i < maxTries; i++) {
+      await new Promise(r => setTimeout(r, interval));
+      try {
+        const res  = await fetch(`/api/stk-status?checkoutId=${encodeURIComponent(checkoutId)}`);
+        const data = await res.json();
+
+        if (data.status === 'success') {
+          document.getElementById('stkStatus').classList.remove('show');
+          document.getElementById('successMsg').style.display = 'block';
+          btn.style.display = 'none';
+          updateProgress(Math.ceil(amount));
+          return;
+        }
+        if (data.status === 'failed' || data.status === 'cancelled') {
+          throw new Error(data.message || 'Payment was not completed. Please try again.');
+        }
+        // status === 'pending' → keep polling
+      } catch (err) {
+        if (err.message !== 'pending') {
+          document.getElementById('stkStatus').classList.remove('show');
+          showError(err.message);
+          btn.disabled  = false;
+          btn.innerHTML = '<span>📱</span> Pay with M-Pesa';
+          return;
+        }
+      }
+    }
+
+    // Timed out
+    document.getElementById('stkStatus').classList.remove('show');
+    showError('Timed out waiting for payment. If you completed it, please contact the organiser.');
+    btn.disabled  = false;
+    btn.innerHTML = '<span>📱</span> Pay with M-Pesa';
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('stkError');
+    el.textContent = '⚠️  ' + msg;
+    el.classList.add('show');
+  }
+</script>
+</body>
+</html>
